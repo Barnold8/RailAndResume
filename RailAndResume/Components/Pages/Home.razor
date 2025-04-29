@@ -1,7 +1,34 @@
 ﻿@page "/"
 
+@using HtmlAgilityPack;
+@using System.Net.Http;
+@using System.Net.Http.Headers;
+@using System.Threading.Tasks;
+@using System.Net;
+@using System.Text;
+@using System.IO;
+
+
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@code{
+
+	string html = @"https://html-agility-pack.net/";
+
+	HtmlWeb web = new HtmlWeb();
+
+	HtmlDocument htmlDoc; // Explicitly declare the type
+	HtmlNode node;        // Explicitly declare the type
+
+	protected override void OnInitialized()
+	{
+		htmlDoc = web.Load(html);
+		node = htmlDoc.DocumentNode.SelectSingleNode("//head/title");
+		Console.WriteLine("Node Name: " + node.Name + "\n" + node.OuterHtml);
+	}
+}
