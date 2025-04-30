@@ -47,7 +47,7 @@ namespace RailAndResume.Components.Scrapers
 
         public override void processContents()
         {
-            throw new NotImplementedException();
+            Console.WriteLine(m_contents.DocumentNode.OuterHtml);
         }
 
     }
