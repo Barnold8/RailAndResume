@@ -19,35 +19,26 @@
 	public async Task foo()
 	{
 
-		List<Scraper> jobSites = [
-
-		];
-
-		TrainLineScraper trainLineScraper = new TrainLineScraper("https://uk.indeed.com/");
-
-		trainLineScraper.initialiseWebPage();
+		TrainLineScraper trainLineScraper = new TrainLineScraper("https://traintimes.org.uk");
 		trainLineScraper.processContents();
 
-		DataHarvester dataHarvester = new DataHarvester(jobSites, trainLineScraper);
-
-		// HtmlDocument? document = await tl.GrabWebPageAsync("");
-		
-
-		// // DataHarvester dataHarvester = new DataHarvester();
-	
-		// // HtmlDocument? document = await dataHarvester.GrabWebPageAsync("https://traintimes.org.uk/");
-
-		// if (document != null){
-		// 	HtmlNode? node = document.DocumentNode.SelectSingleNode("//head/title");
-		// 	titleName = node != null ? node.InnerText : "Output";
-		// 	statusText = titleName;
-		// }
-		// else{
-		// 	statusText = "Null";		
-		// }
-
-		
 
 	}
 
+	// List<Scraper> jobSites = [
+
+	// ];
+
+	// TrainLineScraper trainLineScraper = new TrainLineScraper("https://uk.indeed.com/");
+
+	
+	// trainLineScraper.processContents();
+
+	// DataHarvester dataHarvester = new DataHarvester(jobSites, trainLineScraper);
+
+	// HtmlDocument? document = await tl.GrabWebPageAsync("");
+
+
 }
+
+

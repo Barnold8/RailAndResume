@@ -1,4 +1,7 @@
-﻿using HtmlAgilityPack;
+﻿using System.Collections.ObjectModel;
+using HtmlAgilityPack;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 
 namespace RailAndResume.Components.Scrapers
 {
@@ -15,39 +18,28 @@ namespace RailAndResume.Components.Scrapers
         // Following by date arriving
 
 
-        private HtmlDocument? m_contents;
-        private string m_url;
+        private ChromeDriver m_driver;
 
         public TrainLineScraper(string url) {
-            m_url = url;
+
+            m_driver = InitialiseDriver();
+            m_driver.Navigate().GoToUrl(url);
+
+           
         }
 
-        public override async void initialiseWebPage() {
-
-            if (m_url != null && m_url.Length >= Scraper.URL_CHAR_MIN)
-            {
-                m_contents = await this.GrabWebPageAsync(m_url);
-            }
-            else {
-
-                if (m_url == null)
-                {
-                    throw new ArgumentException(
-                        string.Format("Parameter cannot be null | Variable name {0}", nameof(m_url))
-                    );
-                }
-                else {
-                    throw new ArgumentException(
-                        string.Format("Parameter cannot be of length 0 | Variable length {0}", m_url.Length)
-                    );
-                }
-            }
-
-        }
+ 
 
         public override void processContents()
         {
-            Console.WriteLine(m_contents.DocumentNode.OuterHtml);
+
+            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("results"));
+
+            foreach (IWebElement element in elements)
+            {
+                Console.WriteLine(element.Text);
+            }
+
         }
 
     }
