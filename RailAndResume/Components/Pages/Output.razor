@@ -1,0 +1,53 @@
+﻿@page "/output"
+@using HtmlAgilityPack;
+@using RailAndResume.Components.Scrapers
+@rendermode InteractiveServer
+
+<PageTitle>output</PageTitle>
+
+<h3>Your results:</h3>
+
+<button @onclick=foo>Click me!</button>
+<div> Status: @statusText</div>
+
+@code {
+
+	private string? titleName = "Output";
+	private string statusText = "N/A";
+
+
+	public async Task foo()
+	{
+
+		List<Scraper> jobSites = [
+
+		];
+
+		TrainLineScraper trainLineScraper = new TrainLineScraper("https://traintimes.org.uk");
+
+		trainLineScraper.initialiseWebPage();
+		trainLineScraper.processContents();
+
+		DataHarvester dataHarvester = new DataHarvester(jobSites, trainLineScraper);
+
+		// HtmlDocument? document = await tl.GrabWebPageAsync("");
+		
+
+		// // DataHarvester dataHarvester = new DataHarvester();
+	
+		// // HtmlDocument? document = await dataHarvester.GrabWebPageAsync("https://traintimes.org.uk/");
+
+		// if (document != null){
+		// 	HtmlNode? node = document.DocumentNode.SelectSingleNode("//head/title");
+		// 	titleName = node != null ? node.InnerText : "Output";
+		// 	statusText = titleName;
+		// }
+		// else{
+		// 	statusText = "Null";		
+		// }
+
+		
+
+	}
+
+}
