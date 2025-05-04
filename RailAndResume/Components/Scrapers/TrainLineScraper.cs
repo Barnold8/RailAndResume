@@ -20,17 +20,9 @@ namespace RailAndResume.Components.Scrapers
         // Then followed by time arriving
         // Following by date arriving
 
+        public TrainLineScraper(string url) : base(url){}
 
-        private ChromeDriver m_driver;
-
-        public TrainLineScraper(string url) {
-
-            m_driver = InitialiseDriver();
-            m_driver.Navigate().GoToUrl(url);
-
-        }
-
-        public override List<Job> processContents()
+        public override List<Job> ProcessContents()
         {
             throw new NotImplementedException();
         }

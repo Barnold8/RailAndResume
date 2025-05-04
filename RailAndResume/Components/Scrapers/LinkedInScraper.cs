@@ -7,18 +7,9 @@ namespace RailAndResume.Components.Scrapers
 {
     public class LinkedInScraper : Scraper
     {
+        public LinkedInScraper(string url) : base(url) { }
 
-        private ChromeDriver m_driver;
-
-        public LinkedInScraper(string url)
-        {
-
-            m_driver = InitialiseDriver();
-            m_driver.Navigate().GoToUrl(url);
-
-        }
-
-        public override List<Job> processContents()
+        public override List<Job> ProcessContents()
         {
             ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("job-search-card"));
             List<Job> jobs = new List<Job>();
@@ -35,10 +26,11 @@ namespace RailAndResume.Components.Scrapers
                     string[] splitContents = contents.Split("\n");
                     string link = "N/A";
 
-                    if (links != null) {
+                    if (links != null)
+                    {
                         string? tempLink = links.First().GetAttribute("href");
                         link = tempLink == null ? "N/A" : tempLink;
-                       
+
                     }
 
                     Job job = new Job(
@@ -54,26 +46,7 @@ namespace RailAndResume.Components.Scrapers
             m_driver.Close();
 
             return jobs;
-        }
-
-        public string returnContents()
-        {
-
-            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("base-card"));
-
-            string f = elements.Count.ToString();
-
-            foreach (IWebElement element in elements)
-            {
-                f += element.GetAttribute("innerHTML") + "\n\n\n\n\n";
-
-            } 
-
-            m_driver.Close();
-
-            return f;
 
         }
-
     }
 }

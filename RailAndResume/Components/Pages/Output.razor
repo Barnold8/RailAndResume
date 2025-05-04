@@ -11,20 +11,20 @@
 <button @onclick=foo>Click me!</button>
 <div> Status: @statusText</div>
 
-@* <ul>
+<ul>
 	@foreach (var item in jobs)
 	{
 		<li>
-			Name: @item.jobName
+			name: @item.jobName
 		</li>
 		<li>
-			Location: @item.jobLocation
+			location: @item.jobLocation
 		</li>
 		<li>
-			<a href="@item.jobLink">Link: </a>
+			<a href="@item.jobLink">link: </a>
 		</li>
 	}
-</ul> *@
+</ul>
 
 @code {
 
@@ -35,7 +35,11 @@
 	public async Task foo()
 	{
 
+		LinkedInScraper linkedInScraper = new LinkedInScraper("https://www.linkedin.com/jobs/search/?currentJobId=4203692028&distance=25&geoId=105351059&keywords=junior%20developer&origin=JOBS_HOME_KEYWORD_HISTORY&refresh=true");
 
+		jobs = linkedInScraper.ProcessContents();
+
+		// IndeedScraper indeedScraper = new IndeedScraper("");
 
 	}
 
