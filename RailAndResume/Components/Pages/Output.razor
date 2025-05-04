@@ -3,26 +3,30 @@
 @using RailAndResume.Components.Scrapers
 @rendermode InteractiveServer
 
-<PageTitle>output</PageTitle>
+<PageTitle>Output</PageTitle>
 
 <h3>Your results:</h3>
 
 <button @onclick=foo>Click me!</button>
 <div> Status: @statusText</div>
 
+<div>@output</div>
+
 @code {
 
-	private string? titleName = "Output";
 	private string statusText = "N/A";
-
+	private string output = "";
 
 	public async Task foo()
 	{
 
-		TrainLineScraper trainLineScraper = new TrainLineScraper("https://traintimes.org.uk");
-		trainLineScraper.processContents();
+		statusText = "Clicked!";
+
+		LinkedInScraper linkedInScraper = new LinkedInScraper("https://www.linkedin.com/jobs/search/?currentJobId=4203692028&distance=25&geoId=105351059&keywords=junior%20developer&origin=JOBS_HOME_KEYWORD_HISTORY&refresh=true");
+		output = linkedInScraper.returnContents();
 
 
+		statusText = "Clicked!";
 	}
 
 	// List<Scraper> jobSites = [
@@ -30,8 +34,6 @@
 	// ];
 
 	// TrainLineScraper trainLineScraper = new TrainLineScraper("https://uk.indeed.com/");
-
-	
 	// trainLineScraper.processContents();
 
 	// DataHarvester dataHarvester = new DataHarvester(jobSites, trainLineScraper);

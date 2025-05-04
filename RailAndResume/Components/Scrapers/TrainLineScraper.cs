@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.Xml.Linq;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RailAndResume.Components.Scrapers
 {
@@ -24,11 +26,8 @@ namespace RailAndResume.Components.Scrapers
 
             m_driver = InitialiseDriver();
             m_driver.Navigate().GoToUrl(url);
-
            
         }
-
- 
 
         public override void processContents()
         {
@@ -37,8 +36,30 @@ namespace RailAndResume.Components.Scrapers
 
             foreach (IWebElement element in elements)
             {
-                Console.WriteLine(element.Text);
+             
+                Console.WriteLine("Element: {0}", element.Text);
             }
+
+            m_driver.Close();
+        
+        }
+
+        public string returnContents()
+        {
+
+            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("results"));
+
+            string f = "";
+
+            foreach (IWebElement element in elements)
+            {
+                f += element.Text + "\n";
+                
+            }
+
+            m_driver.Close();
+
+            return f;
 
         }
 
