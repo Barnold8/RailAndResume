@@ -1,6 +1,7 @@
 ﻿@page "/output"
 @using HtmlAgilityPack;
 @using RailAndResume.Components.Scrapers
+@using RailAndResume.Models
 @rendermode InteractiveServer
 
 <PageTitle>Output</PageTitle>
@@ -10,23 +11,32 @@
 <button @onclick=foo>Click me!</button>
 <div> Status: @statusText</div>
 
-<div>@output</div>
+@* <ul>
+	@foreach (var item in jobs)
+	{
+		<li>
+			Name: @item.jobName
+		</li>
+		<li>
+			Location: @item.jobLocation
+		</li>
+		<li>
+			<a href="@item.jobLink">Link: </a>
+		</li>
+	}
+</ul> *@
 
 @code {
 
 	private string statusText = "N/A";
 	private string output = "";
+	List<Job> jobs = new List<Job>();
 
 	public async Task foo()
 	{
 
-		statusText = "Clicked!";
-
-		LinkedInScraper linkedInScraper = new LinkedInScraper("https://www.linkedin.com/jobs/search/?currentJobId=4203692028&distance=25&geoId=105351059&keywords=junior%20developer&origin=JOBS_HOME_KEYWORD_HISTORY&refresh=true");
-		output = linkedInScraper.returnContents();
 
 
-		statusText = "Clicked!";
 	}
 
 	// List<Scraper> jobSites = [
@@ -35,10 +45,6 @@
 
 	// TrainLineScraper trainLineScraper = new TrainLineScraper("https://uk.indeed.com/");
 	// trainLineScraper.processContents();
-
-	// DataHarvester dataHarvester = new DataHarvester(jobSites, trainLineScraper);
-
-	// HtmlDocument? document = await tl.GrabWebPageAsync("");
 
 
 }

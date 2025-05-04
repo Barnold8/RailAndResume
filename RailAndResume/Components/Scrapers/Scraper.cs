@@ -1,6 +1,7 @@
 ﻿using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using RailAndResume.Models;
 
 namespace RailAndResume.Components.Scrapers
 {
@@ -8,8 +9,9 @@ namespace RailAndResume.Components.Scrapers
     public abstract class Scraper
     {
         static readonly public int URL_CHAR_MIN = 17; // 18 because (https:// | 8) + (www. | 4) + (a | 1 AKA minimum second-level domain name length) + (.com | 4)
-        static readonly public int LOAD_WAIT = 10;     // How long each selenium instance will wait before a website can be processed (this is for dynamic websites)
-        public abstract void processContents();
+        static readonly public int LOAD_WAIT = 3;    // How long each selenium instance will wait before a website can be processed (this is for dynamic websites)
+
+        public abstract List<Job> processContents();
 
         public ChromeDriver InitialiseDriver() {
 

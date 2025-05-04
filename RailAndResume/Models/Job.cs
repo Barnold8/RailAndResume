@@ -20,14 +20,15 @@ namespace RailAndResume.Models
         }
         public string jobLink
         {
-            get { return m_jobLocation; }
-            set { m_jobLocation = value; }
+            get { return m_jobLink; }
+            set { m_jobLink = value; }
         }
 
-        public Job(string jobName, string jobLocation){
+        public Job(string jobName, string jobLocation, string jobLink){
 
             m_jobName       = jobName;
             m_jobLocation   = jobLocation;
+            m_jobLink       = jobLink;
         }
     }
 }

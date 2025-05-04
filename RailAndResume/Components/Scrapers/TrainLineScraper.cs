@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using RailAndResume.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace RailAndResume.Components.Scrapers
@@ -11,9 +12,9 @@ namespace RailAndResume.Components.Scrapers
     public class TrainLineScraper : Scraper
     {
 
-        //url https://traintimes.org.uk/AAA/BBB/22:45/2025-06-30/22:45/2025-06-30
-        // AAA = Start station
-        // BBB = End station
+        //url https://traintimes.org.uk/LDN/NOT/06:00/2025-06-30/22:45/2025-06-30
+        // LDN = Start station (This case, London (LDN))
+        // NOT = End station   (This case, Nottingham (NOT))
         // Then followed by time leaving
         // Followed by date leaving
         // Then followed by time arriving
@@ -26,42 +27,12 @@ namespace RailAndResume.Components.Scrapers
 
             m_driver = InitialiseDriver();
             m_driver.Navigate().GoToUrl(url);
-           
+
         }
 
-        public override void processContents()
+        public override List<Job> processContents()
         {
-
-            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("results"));
-
-            foreach (IWebElement element in elements)
-            {
-             
-                Console.WriteLine("Element: {0}", element.Text);
-            }
-
-            m_driver.Close();
-        
+            throw new NotImplementedException();
         }
-
-        public string returnContents()
-        {
-
-            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("results"));
-
-            string f = "";
-
-            foreach (IWebElement element in elements)
-            {
-                f += element.Text + "\n";
-                
-            }
-
-            m_driver.Close();
-
-            return f;
-
-        }
-
     }
 }
