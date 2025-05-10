@@ -8,7 +8,6 @@ namespace RailAndResume.Models
         private string m_jobLocation;
         private string m_jobLink;
 
-
         public string jobName {
             get { return m_jobName; }   
             set { m_jobName = value; } 

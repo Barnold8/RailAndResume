@@ -35,11 +35,9 @@
 	public async Task foo()
 	{
 
-		LinkedInScraper linkedInScraper = new LinkedInScraper("https://www.linkedin.com/jobs/search/?currentJobId=4203692028&distance=25&geoId=105351059&keywords=junior%20developer&origin=JOBS_HOME_KEYWORD_HISTORY&refresh=true");
-
-		jobs = linkedInScraper.ProcessContents();
-
-		// IndeedScraper indeedScraper = new IndeedScraper("");
+		string link = "https://www.totaljobs.com/jobs/junior-developer/in-nottingham?radius=10&searchOrigin=membersarea&rsearch=1";
+		TotalJobsScraper totalJobsScraper = new TotalJobsScraper(link);
+		totalJobsScraper.ProcessContents();
 
 	}
 

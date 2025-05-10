@@ -12,8 +12,15 @@ namespace RailAndResume.Components.Scrapers
         public override List<Job> ProcessContents()
         {
 
-            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("job-search-card"));
+            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.Id("mosaic-jobResults"));
             List<Job> jobs = new List<Job>();
+
+            foreach (IWebElement element in elements)
+            {
+
+                Console.WriteLine("Element: " + element.Text);
+
+            }
 
 
             return jobs;

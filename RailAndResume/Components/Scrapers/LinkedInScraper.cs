@@ -11,42 +11,36 @@ namespace RailAndResume.Components.Scrapers
 
         public override List<Job> ProcessContents()
         {
-            ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("job-search-card"));
             List<Job> jobs = new List<Job>();
+            if (m_driver != null) {
+                ReadOnlyCollection<IWebElement> elements = m_driver.FindElements(By.ClassName("job-search-card"));
 
-
-            foreach (IWebElement element in elements)
-            {
-                string? contents = element.GetAttribute("innerText");
-                ReadOnlyCollection<IWebElement> links = element.FindElements(By.TagName("a"));
-
-                if (contents != null)
+                foreach (IWebElement element in elements)
                 {
+                    string? contents = element.GetAttribute("innerText");
+                    ReadOnlyCollection<IWebElement> links = element.FindElements(By.TagName("a"));
 
-                    string[] splitContents = contents.Split("\n");
-                    string link = "N/A";
-
-                    if (links != null)
+                    if (contents != null)
                     {
-                        string? tempLink = links.First().GetAttribute("href");
-                        link = tempLink == null ? "N/A" : tempLink;
 
+                        string[] splitContents = contents.Split("\n");
+                        string link = GrabLink(links);
+
+                        Job job = new Job(
+                                splitContents[0],
+                                splitContents[2],
+                                link
+                        );
+
+                        if (ValidJob(job))
+                        {
+                            jobs.Add(job);
+                        }
                     }
-
-                    Job job = new Job(
-                            splitContents[0],
-                            splitContents[2],
-                            link
-                    );
-
-                    jobs.Add(job);
                 }
+                Dispose();
             }
-
-            m_driver.Close();
-
             return jobs;
-
         }
     }
 }

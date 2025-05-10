@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using System.Collections.ObjectModel;
+using HtmlAgilityPack;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using RailAndResume.Models;
@@ -10,6 +11,8 @@ namespace RailAndResume.Components.Scrapers
     {
         static readonly public int URL_CHAR_MIN = 17;  // 18 because (https:// | 8) + (www. | 4) + (a | 1 AKA minimum second-level domain name length) + (.com | 4)
         static readonly public int LOAD_WAIT = 3;     // How long each selenium instance will wait before a website can be processed (this is for dynamic websites)
+        private readonly int NAME_LENGTH = 3;
+
 
         protected IWebDriver? m_driver { get; set; }
 
@@ -35,13 +38,6 @@ namespace RailAndResume.Components.Scrapers
             return driver;
         }
 
-        
-        protected void NavigateToUrl(string url)
-        {
-            m_driver?.Navigate().GoToUrl(url);
-        }
-
-        
         public abstract List<Job> ProcessContents();
 
         public virtual void Dispose()
@@ -50,5 +46,37 @@ namespace RailAndResume.Components.Scrapers
             m_driver?.Dispose();
             m_driver = null;
         }
+
+        protected bool ValidJob(Job job)
+        {
+            if (job == null) return false;
+
+            if (job.jobName == null || job.jobName.Length < NAME_LENGTH) return false;
+
+            if (job.jobLink == null || job.jobLink.Length < URL_CHAR_MIN) return false;
+
+            if (job.jobLocation == null || job.jobLocation.Length < NAME_LENGTH) return false;
+
+            return true;
+        }
+
+        protected void NavigateToUrl(string url)
+        {
+            m_driver?.Navigate().GoToUrl(url);
+        }
+
+        protected string GrabLink(ReadOnlyCollection<IWebElement> links)
+        {
+            string link = "N/A";
+
+            if (links != null)
+            {
+                string? tempLink = links.First().GetAttribute("href");
+                link = tempLink == null ? "N/A" : tempLink;
+            }
+            return link;
+
+        }
+
     }
 }
